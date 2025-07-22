@@ -39,7 +39,7 @@ def get_hwid():
         pass
     return None
 
-# ====== Проверка и создание файла HWID ======
+# ====== Проверка и блокировка HWID ======
 def check_and_lock_hwid():
     current_hwid = get_hwid()
     if current_hwid is None:
@@ -57,7 +57,7 @@ def check_and_lock_hwid():
             f.write(current_hwid)
         messagebox.showinfo("Привязка", f"Программа привязана к этому компьютеру.\nHWID: {current_hwid}")
 
-# ====== Автообновление ======
+# ====== Автообновление с подтверждением ======
 def check_for_update():
     try:
         response = requests.get(UPDATE_URL, timeout=10)
@@ -65,18 +65,27 @@ def check_for_update():
         if response.status_code != 200:
             print(f"Ошибка обновления: HTTP {response.status_code}")
             return
-        new_code = response.text
+        new_code = response.text.strip()
         with open(__file__, "r", encoding="utf-8") as f:
-            current_code = f.read()
-        if new_code.strip() != current_code.strip():
-            with open(__file__, "w", encoding="utf-8") as f:
-                f.write(new_code)
-            messagebox.showinfo("Обновление", "Программа обновлена! Перезапусти её.")
-            sys.exit(0)
+            current_code = f.read().strip()
+        if new_code != current_code:
+            answer = messagebox.askyesno(
+                "Обновление",
+                "Доступна новая версия программы.\nОбновить и перезапустить?"
+            )
+            if answer:
+                with open(__file__, "w", encoding="utf-8") as f:
+                    f.write(new_code)
+                messagebox.showinfo("Обновление", "Программа обновлена! Запусти её заново.")
+                sys.exit(0)
+            else:
+                print("Обновление отменено пользователем.")
+        else:
+            print("Обновлений нет.")
     except Exception as e:
         print(f"Ошибка обновления: {e}")
 
-# ====== Функции автотекста ======
+# ====== Добавление опечаток ======
 def add_typos(text):
     result = ""
     for char in text:
@@ -85,6 +94,7 @@ def add_typos(text):
         result += char
     return result
 
+# ====== Автонабор текста ======
 def auto_type(text, interval, count, typos):
     lines = text.splitlines()
     for i in range(count):
@@ -97,6 +107,7 @@ def auto_type(text, interval, count, typos):
         pyautogui.press("enter")
         time.sleep(interval)
 
+# ====== Запуск автонабора ======
 def start_auto_type():
     try:
         interval = float(interval_entry.get())
@@ -109,6 +120,7 @@ def start_auto_type():
     except Exception as e:
         messagebox.showerror("Ошибка", f"Проверь поля ввода.\n{e}")
 
+# ====== Слушатель горячей клавиши ======
 def listen_hotkey():
     hotkey = hotkey_entry.get().lower()
     pressed = False
@@ -120,6 +132,7 @@ def listen_hotkey():
             pressed = False
         time.sleep(0.1)
 
+# ====== Загрузка текста из файла ======
 def load_file():
     file_path = filedialog.askopenfilename(filetypes=[("Text files", "*.txt")])
     if file_path:
@@ -136,14 +149,14 @@ root.configure(bg="#1a0000")
 root.geometry("430x560")
 root.resizable(False, False)
 
-# ====== Открываем ссылки при запуске ======
+# ====== Открытие ссылок при запуске ======
 webbrowser.open_new_tab(FUNPAY_URL)
 webbrowser.open_new_tab(TELEGRAM_URL)
 
 # ====== HWID проверка ======
 check_and_lock_hwid()
 
-# ====== Проверка обновлений ======
+# ====== Проверка обновления ======
 check_for_update()
 
 # ====== Интерфейс ======
@@ -181,7 +194,7 @@ Button(bottom_frame, text="💬 Отзывы", bg="darkred", fg="white", command
 Button(bottom_frame, text="👤 Telegram", bg="darkred", fg="white", command=lambda: webbrowser.open(TELEGRAM_URL)).pack(side=LEFT, padx=5)
 Button(bottom_frame, text="🛒 FunPay", bg="darkred", fg="white", command=lambda: webbrowser.open(FUNPAY_URL)).pack(side=LEFT, padx=5)
 
-# ====== Запуск слушателя hotkey ======
+# ====== Запуск слушателя горячей клавиши в отдельном потоке ======
 threading.Thread(target=listen_hotkey, daemon=True).start()
 
 root.mainloop()
