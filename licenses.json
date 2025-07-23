@@ -14,6 +14,11 @@
       "expires":      "2030-08-31",
       "uses_left":     1,
       "assigned_hwid": ""
+    },
+    "besti": {
+      "expires":      "2025-11-31",
+      "uses_left":     1,
+      "assigned_hwid": ""
     }
   }
 }
