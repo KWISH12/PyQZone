@@ -9,6 +9,11 @@
       "expires":      "2025-12-31",
       "uses_left":     5,
       "assigned_hwid": ""
+    },
+    "qcaps": {
+      "expires":      "2030-08-31",
+      "uses_left":     1,
+      "assigned_hwid": ""
     }
   }
 }
