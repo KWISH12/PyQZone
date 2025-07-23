@@ -1,6 +1,14 @@
 {
   "codes": {
-    "PRO-001": { "expires": "2025-12-31" },
-    "TRIAL-30D": { "expires": "2025-08-22" }
+    "jioss": {
+      "expires":      "2026-01-02",
+      "uses_left":    -1,
+      "assigned_hwid": ""
+    },
+    "VIP-123": {
+      "expires":      "2025-12-31",
+      "uses_left":     5,
+      "assigned_hwid": ""
+    }
   }
 }
