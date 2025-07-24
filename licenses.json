@@ -19,6 +19,11 @@
       "expires":      "2025-11-31",
       "uses_left":     1,
       "assigned_hwid": ""
+    
+    },
+    "doxbin": {
+      "expires":      "2025-12-31",
+      "uses_left":     1,
+      "assigned_hwid": ""
     }
-  }
 }
