@@ -1,28 +1,29 @@
 {
   "codes": {
     "jioss": {
-      "expires":      "2026-01-02",
-      "uses_left":    -1,
+      "expires": "2026-01-02",
+      "uses_left": -1,
       "assigned_hwid": ""
     },
     "VIP-123": {
-      "expires":      "2025-12-31",
-      "uses_left":     5,
+      "expires": "2025-12-31",
+      "uses_left": 5,
       "assigned_hwid": ""
     },
     "qcaps": {
-      "expires":      "2030-08-31",
-      "uses_left":     1,
+      "expires": "2030-08-31",
+      "uses_left": 1,
       "assigned_hwid": ""
     },
-     "k_iz3": {
-      "expires":      "2025-11-31",
-      "uses_left":     1,
+    "k_iz3": {
+      "expires": "2025-11-30",
+      "uses_left": 1,
       "assigned_hwid": ""
     },
     "doxbin": {
-      "expires":      "2025-12-31",
-      "uses_left":     1,
+      "expires": "2025-12-31",
+      "uses_left": 1,
       "assigned_hwid": ""
     }
+  }
 }
